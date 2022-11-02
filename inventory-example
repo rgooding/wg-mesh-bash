@@ -1,0 +1,16 @@
+# wg-mesh-bash inventory
+#
+# This file contains a list of hosts to be included in the mesh, one host per line
+# Comments start with a hash, blank lines are ignored
+#
+# host format: hostname:external-ip-or-hostname:ssh-user
+#
+# hostname               : REQUIRED The hostname or IP, used
+# external-ip-or-hostname: IP or hostname where Wireguard will listen. Defaults to hostname if missing or empty
+# ssh-user               : Username for SSH connections. Defaults to root if missing or empty. Requires sudo if not root.
+#
+
+host1.example.com
+host2.example.com:1.2.3.4
+host3.example.com:2.3.4.5:myuser
+host4.example.com::myuser
