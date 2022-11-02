@@ -2,9 +2,13 @@
 set -e
 cd $(dirname "${BASH_SOURCE[0]}")
 
+# The name to give the Wireguard network interface
 IFACE=wgmesh0
+# Prefix for IP addresses. This should be the first 3 octets with no trailing dot.
 IPPREFIX="10.9.5"
+# Netmask length for the mesh network. Values other than 24 probably won't work.
 NETMASKLEN="24"
+# The UDP port where the Wireguard service will listen on all hosts
 LISTENPORT=55800
 # If START_MESH is 1 then the mesh network will be started/updated when this script runs
 START_MESH=1
