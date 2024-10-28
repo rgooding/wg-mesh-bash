@@ -26,12 +26,14 @@ function hostVars() {
   local _H
   local _IP
   local _U
+  local _EXTRA_IPS
 
   for _IH in $INVENTORY
   do
     _H=$(echo "$_IH" | cut -d: -f1)
     _IP=$(echo "$_IH" | cut -d: -f2)
     _U=$(echo "$_IH" | cut -d: -f3)
+    _EXTRA_IPS=$(echo "$_IH" | cut -d: -f4)
     if [ "$_H" = "$_HOST" ]
     then
       if [ "$_IP" = "" ]
@@ -42,7 +44,7 @@ function hostVars() {
       then
         _U=root
       fi
-      echo "$_H $_IP $_U"
+      echo "$_H $_IP $_U $_EXTRA_IPS"
       break
     fi
   done
@@ -56,7 +58,7 @@ function _ssh() {
   local _U
   local _SUDO
 
-  read _H _X _U < <(hostVars $_HOST)
+  read _H _X _U _X2 < <(hostVars $_HOST)
 
   if [ "$_U" != "root" ]
   then
@@ -131,13 +133,17 @@ EOF
       continue
     fi
 
-    read _H _WANIP _U < <(hostVars $H)
+    read _H _WANIP _U _EXTRA_IPS < <(hostVars $H)
+    if [ "$_EXTRA_IPS" != "" ]
+    then
+      _EXTRA_IPS=",$_EXTRA_IPS"
+    fi
     _ssh $_HOST "cat >>$TMPCFG" <<EOF
 
 # $H
 [Peer]
 PublicKey = $(cat $CFGDIR/pubkey.$H)
-AllowedIPs = $(cat $CFGDIR/ip.$H)/32
+AllowedIPs = $(cat $CFGDIR/ip.$H)/32$_EXTRA_IPS
 Endpoint = $_WANIP:$LISTENPORT
 EOF
   done

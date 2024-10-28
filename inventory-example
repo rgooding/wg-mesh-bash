@@ -3,14 +3,16 @@
 # This file contains a list of hosts to be included in the mesh, one host per line
 # Comments start with a hash, blank lines are ignored
 #
-# host format: hostname:external-ip-or-hostname:ssh-user
+# host format: hostname:external-ip-or-hostname:ssh-user[:additional-ips]
 #
 # hostname               : REQUIRED The hostname or IP, used for SSH connection while setting up the network
 # external-ip-or-hostname: IP or hostname where Wireguard will listen. Defaults to hostname if missing or empty
 # ssh-user               : Username for SSH connections. Defaults to root if missing or empty. Requires sudo if not root.
-#
+# additional-ips         : Optional. If specified this should be a comma-separated list of additional IP addresses for
+#                          this host, e.g. if you want to access its LAN IP via the VPN. IPs should be in CIDR format, e.g. 10.0.0.1/32
 
 host1.example.com
 host2.example.com:1.2.3.4
 host3.example.com:2.3.4.5:myuser
 host4.example.com::myuser
+host5.example.com:3.4.5.6:myuser:10.1.2.1/32,10.2.1.2/32
