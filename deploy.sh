@@ -29,7 +29,9 @@ function hostVars() {
 
   for _IH in $INVENTORY
   do
-    IFS=: read _H _IP _U < <(echo $_IH)
+    _H=$(echo "$_IH" | cut -d: -f1)
+    _IP=$(echo "$_IH" | cut -d: -f2)
+    _U=$(echo "$_IH" | cut -d: -f3)
     if [ "$_H" = "$_HOST" ]
     then
       if [ "$_IP" = "" ]
