@@ -119,7 +119,7 @@ ListenPort = $LISTENPORT
 Address = $(cat $CFGDIR/ip.$_HOST)/$NETMASKLEN
 EOF
 
-  _ssh $_HOST "sed -i \"s/##privkey##/\$(cat $PRIVKEY)/\" $TMPCFG"
+  _ssh $_HOST "sed -i \"s|##privkey##|\$(cat $PRIVKEY)|\" $TMPCFG"
 
   # Add peer entries for other hosts
   for H in $HOSTS
@@ -155,8 +155,10 @@ function main() {
   # Generate keys and allocate IPs for all hosts
   for H in $HOSTS
   do
+    echo "Installing Wireguard on $H"
     installWireguard $H
     getIp $H >/dev/null
+    echo "Getting/generating keys for $H"
     genOrGetKeys $H >"$CFGDIR/pubkey.$H"
   done
 
