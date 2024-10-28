@@ -5,7 +5,7 @@
 #
 # host format: hostname:external-ip-or-hostname:ssh-user
 #
-# hostname               : REQUIRED The hostname or IP, used
+# hostname               : REQUIRED The hostname or IP, used for SSH connection while setting up the network
 # external-ip-or-hostname: IP or hostname where Wireguard will listen. Defaults to hostname if missing or empty
 # ssh-user               : Username for SSH connections. Defaults to root if missing or empty. Requires sudo if not root.
 #
